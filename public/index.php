@@ -4,7 +4,7 @@ session_start();
 
 require_once '../app/core/init.php';
 
-$route = isset($_GET['route']) ? $_GET['route'] : 'layouts';
+$route = isset($_GET['route']) ? $_GET['route'] : 'todo';
 
 if (file_exists('../app/page/' . $route . '.php')) {
     require_once '../app/page/' . $route . '.php';
