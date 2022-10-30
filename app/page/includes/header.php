@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="right_control">
-        Профиль
+        Профиль <a href="/index.php?route=logouts">Выход</a>
         <div class="notification">
             <i class="ri-notification-4-line"></i>
         </div>
