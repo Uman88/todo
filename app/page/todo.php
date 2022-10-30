@@ -10,7 +10,6 @@
 <body>
 
 <?php
-
 if (isset($_SESSION['user'])) {
     include 'includes/header.php';
     include 'includes/sidebar.php';
@@ -18,8 +17,6 @@ if (isset($_SESSION['user'])) {
 } else {
     include 'login.php';
 }
-
-
 ?>
 
 <?php include 'includes/js.php'; ?>
