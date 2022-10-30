@@ -11,12 +11,12 @@
 
 <?php
 
-if ($_SESSION['user']) {
+if (isset($_SESSION['user'])) {
     include 'includes/header.php';
     include 'includes/sidebar.php';
     include 'includes/content.php';
 } else {
-    include 'register.php';
+    include 'login.php';
 }
 
 
