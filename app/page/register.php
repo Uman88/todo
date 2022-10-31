@@ -19,7 +19,7 @@
             </div>
             <div class="input-field">
                 <i class="ri-mail-line"></i>
-                <input type="text" name="email" placeholder="Введите почту">
+                <input type="text" name="email" placeholder="Введите email">
             </div>
             <div class="input-field">
                 <i class="ri-lock-line"></i>
