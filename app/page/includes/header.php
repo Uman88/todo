@@ -13,12 +13,24 @@
         </div>
     </div>
     <div class="right_control">
-        Профиль <a href="/index.php?route=logouts">Выход</a>
-        <div class="notification">
-            <i class="ri-notification-4-line"></i>
-        </div>
-        <div class="add_plus_task">
-            <i class="ri-add-line"></i>
+        <img src="<?= IMAGES; ?>no-avatar.png" class="user-pic" alt="" onclick="toggleMenu()">
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="<?= IMAGES; ?>no-avatar.png" alt="">
+                    <h2><?= $_SESSION['user']['name'] ?></h2>
+                </div>
+                <hr>
+                <a href="/index.php?route=edit-profile" class="sub-menu-link">
+                    <i class="ri-edit-line"></i>
+                    <p>Профиль</p>
+                    <span></span>
+                </a>
+                <a href="/index.php?route=logouts" class="sub-menu-link">
+                    <i class="ri-logout-box-r-line"></i>
+                    <p>Выход</p>
+                </a>
+            </div>
         </div>
     </div>
 </header>

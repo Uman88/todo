@@ -131,23 +131,102 @@ body {
     outline: none;
 }
 
+/* Profile */
 .right_control {
     display: flex;
     flex-direction: row-reverse;
+    align-items: center;
     margin-top: -35px;
     margin-right: 24px;
 }
 
-.add_plus_task {
-    font-size: 20pt;
-    margin-top: -4px;
+.user-pic {
+    width: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+.sub-menu-wrap {
+    position: absolute;
+    top: 100%;
+    right: 1%;
+    width: 280px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+.sub-menu-wrap.open-menu {
+    max-height: 300px;
+}
+
+.sub-menu {
+    background: #fff;
+    padding: 20px;
+    margin: 10px;
+}
+
+.sub-menu h2 {
+    color: var(--grey);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.sub-menu hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 15px 0 10px;
+}
+
+.sub-menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    margin: 12px 0;
+    color: var(--grey);
+}
+
+.sub-menu-link p {
+    width: 100%;
+    color: var(--grey);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.sub-menu-link i {
+    font-size: 1.5rem;
     margin-right: 10px;
 }
 
-.notification {
-    font-size: 16pt;
-    margin-right: 10px;
+.sub-menu-link:hover {
+    text-decoration: underline;
 }
+
+/* End of Profile */
+
+
+/*.add_plus_task {*/
+/*    font-size: 20pt;*/
+/*    margin-top: -4px;*/
+/*    margin-right: 10px;*/
+/*}*/
+
 
 /* End of Header */
 

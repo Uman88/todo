@@ -4,11 +4,16 @@
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
 const burgerBtn = document.getElementById('burger-menu-toggle');
+const subMenu = document.getElementById('subMenu');
 
 burgerBtn.addEventListener('click', function () {
     sidebar.classList.toggle('close')
     content.classList.toggle('mg-left-content');
 })
+
+function toggleMenu(){
+    subMenu.classList.toggle('open-menu')
+}
 
 // Jquery
 
