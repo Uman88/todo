@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="form-center">
-        <form action="/index.php?route=signin" method="post" enctype="multipart/form-data" class="sign-in-form">
+        <form action="/index.php?route=signin" method="post" enctype="multipart/form-data" class="form">
             <h2 class="title-form">Авторизация</h2>
             <div class="input-field">
                 <i class="ri-mail-line"></i>

@@ -11,7 +11,7 @@
 
 <div class="container">
     <div class="form-center">
-        <form action="/index.php?route=signup" method="post" class="sign-in-form">
+        <form action="/index.php?route=signup" method="post" class="form">
             <h2 class="title-form">Регистрация</h2>
             <div class="input-field">
                 <i class="ri-user-line"></i>

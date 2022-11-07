@@ -1,48 +1,26 @@
 <!-- Content -->
 <div id="content" class="content">
     <div class="offset-content">
-        <ul id="sortable-tasks" class="list-group">
-            <li class="list-group-item task">
-                <i class="ri-list-check drag_handle"></i>
-                <label class="bubble bubble-first">
-                    <input type="radio" name="radioTask">
-                    <span></span>
-                </label>
-                <div class="title-task">Купить хлеб</div>
-            </li>
-            <li class="list-group-item task">
-                <i class="ri-list-check drag_handle"></i>
-                <label class="bubble bubble-second">
-                    <input type="radio" name="radioTask">
-                    <span></span>
-                </label>
-                <div class="title-task">Забрать посылку с Новой Почты</div>
-            </li>
-            <li class="list-group-item task">
-                <i class="ri-list-check drag_handle"></i>
-                <label class="bubble bubble-third">
-                    <input type="radio" name="radioTask">
-                    <span></span>
-                </label>
-                <div class="title-task">Купить и попить Латте</div>
-            </li>
-            <li class="list-group-item task">
-                <i class="ri-list-check drag_handle"></i>
-                <label class="bubble bubble-fourth">
-                    <input type="radio" name="radioTask">
-                    <span></span>
-                </label>
-                <div class="title-task">Поиграть Battlefield 3</div>
-            </li>
-            <li class="list-group-item task">
-                <i class="ri-list-check drag_handle"></i>
-                <label class="bubble bubble-first">
-                    <input type="radio" name="radioTask">
-                    <span></span>
-                </label>
-                <div class="title-task">Сделать этот проект TODO</div>
-            </li>
-        </ul>
+        <form action="/index.php?route=handler" method="post">
+            <ul id="sortable" class="list-group">
+
+                <?php $id = $_SESSION['user']['id'];
+                $result = mysqli_query($connect, "SELECT * FROM `tasks` WHERE `id_user`='$id' ORDER BY sortable");
+                if (mysqli_num_rows($result) > 0) :
+                    while ($content = mysqli_fetch_assoc($result)) : ?>
+                        <li class="list-group-item task">
+                            <i class="ri-list-check"></i>
+                            <label class="bubble bubble-first">
+                                <input type="radio" name="radioTask" class="radioTask" value="<?= $content['id']; ?>">
+
+                                <span></span>
+                            </label>
+                            <div class="title-task"><?= $content['title']; ?></div>
+                        </li>
+                    <?php endwhile; endif; ?>
+
+            </ul>
+        </form>
     </div>
 </div>
 <!-- End of Content -->

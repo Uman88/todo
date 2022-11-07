@@ -4,21 +4,28 @@
         <button id="burger-menu-toggle" class="left_menu_toggle btn-reset">
             <i class="ri-menu-line"></i>
         </button>
-        <button type="button" id="home-home-toggle" class="left_home btn-reset">
+        <a href="/" class="left_home btn-reset">
             <i class="ri-home-smile-line"></i>
-        </button>
+        </a>
         <div class="search">
             <span class="icon"><i class="ri-search-line"></i></span>
             <input type="text" id="search" class="search-input" placeholder="Поиск..."/>
         </div>
     </div>
     <div class="right_control">
-        <img src="<?= IMAGES; ?>no-avatar.png" class="user-pic" alt="" onclick="toggleMenu()">
+        <div id="taskBtn" class="plus-task">
+            <i class="ri-add-line"></i>
+        </div>
+
+        <img src="<?= IMAGES; ?>no-avatar.png" class="user-pic" alt="" onclick="toggleProfile()">
         <div class="sub-menu-wrap" id="subMenu">
             <div class="sub-menu">
                 <div class="user-info">
                     <img src="<?= IMAGES; ?>no-avatar.png" alt="">
-                    <h2><?= $_SESSION['user']['name'] ?></h2>
+                    <div class="user-name-email">
+                        <h2><?= $_SESSION['user']['name'] ?></h2>
+                        <h5><?= $_SESSION['user']['email'] ?></h5>
+                    </div>
                 </div>
                 <hr>
                 <a href="/index.php?route=edit-profile" class="sub-menu-link">
