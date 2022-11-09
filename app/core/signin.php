@@ -18,7 +18,7 @@ if (mysqli_num_rows($check_user) > 0) {
         'email' => $user['email'],
     ];
 
-    header('Location: /index.php?route=todo');
+    header('Location: /');
 } else {
     $_SESSION['message'] = 'Неверный email или пароль';
     header('Location: /index.php?route=login');
