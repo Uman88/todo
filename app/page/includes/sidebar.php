@@ -1,12 +1,20 @@
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar">
     <nav class="nav">
-        <a href="#" class="nav__link"><span class="nav__icon"><i class="ri-inbox-line inbox_icon"></i></span> Входящие
-            <span class="qty_tasks">20</span></a>
-        <a href="#" class="nav__link"><span class="nav__icon"><i class="ri-calendar-line calendar_icon"></i></span>
-            Сегодня <span class="qty_tasks">1</span></a>
-        <a href="#" class="nav__link"><span class="nav__icon"><i class="ri-calendar-2-line calendar_2_icon"></i></span>
-            В будущем <span class="qty_tasks">191</span></a>
+        <?php $result = mysqli_query($connect, "SELECT * FROM `category`");
+        if (mysqli_num_rows($result) > 0) :
+            while ($category = mysqli_fetch_assoc($result)) : ?>
+                <a href="/index.php?id=<?= $category['id']; ?>" class="nav__link">
+            <span class="nav__icon">
+                <i class="<?= $category['class']; ?>"></i>
+            </span> <?= $category['title']; ?> <span class="qty_tasks">
+                        <?php $id = $category['id'];
+                        $res = mysqli_query($connect, "SELECT count(*) FROM `tasks` WHERE `id_category`='$id'");
+                        $res = mysqli_fetch_assoc($res);
+                        echo($res['count(*)']); ?>
+                    </span>
+                </a>
+            <?php endwhile; endif; ?>
     </nav>
 </div>
 <!-- End of Sidebar -->
