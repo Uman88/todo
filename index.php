@@ -128,10 +128,10 @@ include 'handler.php'; ?>
 
                     <div class="action-button">
                         <button class="edit" data-id="<?= $task['id']; ?>">
-                            Редактировать
+                            <span class="material-symbols-outlined">edit</span>
                         </button>
                         <button class="delete" data-id="<?= $task['id']; ?>">
-                            Удалить
+                            <span class="material-symbols-outlined">delete</span>
                         </button>
                     </div>
                 </div>
