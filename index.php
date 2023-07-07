@@ -1,3 +1,7 @@
+<?php
+
+include 'handler.php'; ?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -33,9 +37,6 @@
         </div>
     </div>
     <div class="header-right">
-        <div class="header-plus-add">
-            <span class="material-symbols-outlined">add</span>
-        </div>
         <div class="header-user" id="user-menu">
             <span class="material-symbols-outlined">person</span>
         </div>
@@ -81,64 +82,63 @@
 
         <h1>
             <span class="simple-info">Сегодня</span>
-            <small>Пт июнь 6</small>
+            <small>
+                <?php
+                //echo date($days[date('N')]);
+
+                $date = strtotime(date('Y-m-d'));
+                $week = date("w", $date);
+
+                foreach ($days as $k => $v) {
+                    if ($k == $week) {
+                        echo $v;
+                    }
+                }
+
+                $m = date('m');
+                foreach ($months as $k => $v) {
+                    if ($k == $m) {
+                        echo ' ' . $v . ' ';
+                    }
+                }
+                echo $d = date('d'); ?></small>
         </h1>
 
         <div class="call-task-form" id="add-task">
             <span><i class="material-symbols-outlined">add</i>Добавить задачу</span>
         </div>
-        <form method="post" action="./handler.php" class="hidden-task-form" id="task-form">
-            <input type="text" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
+        <form action="./handler.php" method="post" class="hidden-task-form" id="task-form">
+            <input type="text" name="name-task" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
             <div class="action-submit">
-                <input type="submit" id="cancel_task" class="btn cancel_task" value="Отмена">
-                <input type="submit" id="add_task" class="btn add_task" value="Добавить задачу">
+                <input type="submit" id="cancel-task" class="btn cancel-task" value="Отмена" return false>
+                <input type="submit" id="add-new-task" class="btn addtask" value="Добавить задачу" disabled>
             </div>
         </form>
 
-        <div class="task">
-            <div class="content">
-                <input type="text" class="text" value="Купить участок для дома и гаража!!!!" readonly>
-            </div>
+        <?php
+        $sql = mysqli_query($conn, "SELECT * FROM `task` ORDER BY id DESC");
+        if (mysqli_num_rows($sql) > 0) :
+            while ($task = mysqli_fetch_assoc($sql)) : ?>
 
-            <div class="action-button">
-                <button class="edit">
-                    <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="delete">
-                    <span class="material-symbols-outlined">delete</span>
-                </button>
-            </div>
-        </div>
+                <div class="task" data-id="<?= $task['id']; ?>">
+                    <div class="content">
+                        <input type="text" class="text" id="task-text" data-id="<?= $task['id']; ?>"
+                               value="<?= $task['title']; ?>" readonly>
+                    </div>
 
-        <div class="task">
-            <div class="content">
-                <input type="text" class="text" value="Купить машину" readonly>
-            </div>
+                    <div class="action-button">
+                        <button class="edit" data-id="<?= $task['id']; ?>">
+                            Редактировать
+                        </button>
+                        <button class="delete" data-id="<?= $task['id']; ?>">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
 
-            <div class="action-button">
-                <button class="edit">
-                    <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="delete">
-                    <span class="material-symbols-outlined">delete</span>
-                </button>
-            </div>
-        </div>
+            <?php
+            endwhile; endif; ?>
 
-        <div class="task">
-            <div class="content">
-                <input type="text" class="text" value="Найти любимую работу" readonly>
-            </div>
-
-            <div class="action-button">
-                <button class="edit">
-                    <span class="material-symbols-outlined">edit</span>
-                </button>
-                <button class="delete">
-                    <span class="material-symbols-outlined">delete</span>
-                </button>
-            </div>
-        </div>
     </section>
 </main>
 <!-- End Main -->
