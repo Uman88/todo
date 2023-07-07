@@ -87,7 +87,7 @@
         <div class="call-task-form" id="add-task">
             <span><i class="material-symbols-outlined">add</i>Добавить задачу</span>
         </div>
-        <form action="" class="hidden-task-form" id="task-form">
+        <form method="post" action="./handler.php" class="hidden-task-form" id="task-form">
             <input type="text" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
             <div class="action-submit">
                 <input type="submit" id="cancel_task" class="btn cancel_task" value="Отмена">
