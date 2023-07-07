@@ -55,16 +55,19 @@ taskInputField.addEventListener('keyup', () => {
 });
 
 // Rename task
-btnEdit.forEach(function (edit) {
-    edit.addEventListener('click', () => {
+let save = '<span class="material-symbols-outlined">save</span>';
+let edit = '<span class="material-symbols-outlined">edit</span>';
+btnEdit.forEach(function (editBtn) {
+    editBtn.addEventListener('click', () => {
         taskText.forEach(function (task) {
-            if (task.dataset.id == edit.dataset.id) {
-                if (edit.innerText.toLowerCase() == 'редактировать') {
-                    edit.innerText = 'Сохранить';
+            if (task.dataset.id == editBtn.dataset.id) {
+                if (editBtn.innerText.toLowerCase() == 'edit') {
+                    editBtn.innerHTML = save;
                     task.removeAttribute('readonly');
                     task.focus();
+                    task.selectionStart = task.value.length
                 } else {
-                    edit.innerText = 'Редактировать';
+                    editBtn.innerHTML = edit;
                     xhttp.open("GET", "handler.php?value=" + task.value + '&id=' + task.dataset.id, true);
                     xhttp.send();
                     task.setAttribute('readonly', 'readonly');
@@ -88,3 +91,6 @@ btnDelete.forEach(function (del) {
         });
     });
 });
+
+/* ================================================= */
+
