@@ -3,6 +3,7 @@
 :root {
     --background: #1c1e26;
     --light: #fff;
+    --other-light: #dcdcdc;
     --purple: #8b5cf6;
     --red: #ff4136;
     --blue: #357edd;
@@ -86,7 +87,7 @@ header {
 .user-settings {
     display: none;
     position: absolute;
-    width: 200px;
+    width: 146px;
     background: #21232d;
     color: var(--light);
     margin: 50px 0 0 -62px;
@@ -283,6 +284,10 @@ main {
     display: none;
 }
 
+.open-task-form {
+    display: block;
+}
+
 .btn {
     display: inline-block;
     border: none;
@@ -301,24 +306,23 @@ main {
     margin: 10px 0;
 }
 
-.cancel_task {
+.cancel-task {
     background: var(--black);
-    color: var(--light);
-    opacity: 0.3;
+    color: var(--other-light);
     margin-right: 5px;
 }
 
-.cancel_task:hover {
-    opacity: 1;
+.cancel-task:hover {
+    color: var(--light);
 }
 
-.add_task {
+.add-task {
     background: var(--red);
     color: var(--light);
     opacity: 0.3;
 }
 
-.add_task:hover {
+.add-task:hover {
     opacity: 1;
 }
 
@@ -398,10 +402,8 @@ main {
     }
 }
 
-
-
-
-
-
-
 /* Media Queries */
+
+.fade-out {
+    display: none;
+}
