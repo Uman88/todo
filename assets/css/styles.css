@@ -203,11 +203,11 @@ main {
 }
 
 .task-list {
-    margin: 50px 20px 0 270px;
+    margin: 50px 0 0 200px;
 }
 
 .offset-task-list {
-    margin: 50px 20px 0 20px;
+    margin: 50px 20px 0 40px;
 }
 
 .task-list h1 {
@@ -326,6 +326,17 @@ main {
     opacity: 1;
 }
 
+.sortable-list {
+    list-style: none;
+}
+
+.drag {
+    position: absolute;
+    display: flex;
+    cursor: move;
+    margin: -25px 0 0 -30px;
+}
+
 .task {
     display: flex;
     justify-content: space-between;
@@ -398,7 +409,7 @@ main {
     }
 
     .task-list {
-        margin: 50px 20px 0 20px;
+        margin: 50px 20px 0 40px;
     }
 }
 
@@ -406,4 +417,8 @@ main {
 
 .fade-out {
     display: none;
+}
+
+.item:not.dragging {
+    opacity: 0;
 }

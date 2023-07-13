@@ -115,30 +115,33 @@ include 'handler.php'; ?>
             </div>
         </form>
 
-        <?php
-        $sql = mysqli_query($conn, "SELECT * FROM `task` ORDER BY id DESC");
-        if (mysqli_num_rows($sql) > 0) :
-            while ($task = mysqli_fetch_assoc($sql)) : ?>
-
-                <div class="task" data-id="<?= $task['id']; ?>">
-                    <div class="content">
-                        <input type="text" class="text" id="task-text" data-id="<?= $task['id']; ?>"
-                               value="<?= $task['title']; ?>" readonly>
-                    </div>
-
-                    <div class="action-button">
-                        <button class="edit" data-id="<?= $task['id']; ?>">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
-                        <button class="delete" data-id="<?= $task['id']; ?>">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                    </div>
-                </div>
-
+        <ul class="sortable-list">
             <?php
-            endwhile; endif; ?>
+            $sql = mysqli_query($conn, "SELECT * FROM `task` ORDER BY sortable");
+            if (mysqli_num_rows($sql) > 0) :
+                while ($task = mysqli_fetch_assoc($sql)) : ?>
+                    <li class="item" draggable="true" data-id="<?= $task['id']; ?>">
+                        <div class="task" data-id="<?= $task['id']; ?>">
+                            <div class="content">
+                                <input type="text" class="text" id="task-text" data-id="<?= $task['id']; ?>"
+                                       value="<?= $task['title']; ?>" readonly>
+                                <span class="material-symbols-outlined drag">drag_indicator</span>
+                            </div>
 
+                            <div class="action-button">
+                                <button class="edit" data-id="<?= $task['id']; ?>">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                                <button class="delete" data-id="<?= $task['id']; ?>">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                <?php
+                endwhile;
+            endif; ?>
+        </ul>
     </section>
 </main>
 <!-- End Main -->

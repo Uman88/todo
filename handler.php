@@ -57,14 +57,25 @@ if (isset($_GET['value']) && isset($_GET['id'])) {
     $title = htmlspecialchars($_GET['value'], ENT_QUOTES);
     $id = htmlspecialchars(trim($_GET['id']));
 
-    mysqli_query($conn, "UPDATE task SET title='$title', datetime='$date' WHERE id='$id'");
+    mysqli_query($conn, "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'");
 }
-
 
 // Delete task
 if (isset($_GET['delid'])) {
     $delid = (int)$_GET['delid'];
     if (is_numeric($delid)) {
-        mysqli_query($conn, "DELETE FROM task WHERE id='$delid'");
+        mysqli_query($conn, "DELETE FROM `task` WHERE id='$delid'");
+    }
+}
+
+// Sort tasks
+if (isset($_GET['arrid'])) {
+    $arrIds = explode(",", htmlspecialchars(trim($_GET['arrid'])));
+    // Инкрементирую ключ $k, для того чтобы сортировка начиналось не с 0, а 1.
+    // Это сделано для того, когда добавляется задача у нее по умолчанию сортировка с 0
+    // Сама задача находится верху списка.
+    foreach ($arrIds as $k => $v){
+        $k++;
+        mysqli_query($conn, "UPDATE `task` SET sortable='$k' WHERE id='$v'");
     }
 }

@@ -13,10 +13,9 @@ const btnDelete = document.querySelectorAll('.delete');
 const taskText = document.querySelectorAll('#task-text');
 const xhttp = new XMLHttpRequest();
 const tasks = document.querySelectorAll('.task');
+const sortableList = document.querySelector('.sortable-list');
+const items = document.querySelectorAll('.item');
 
-let ob = {
-    'id': 2
-}
 
 // Toggle sidebar
 burgerMenu.addEventListener('click', function () {
@@ -92,5 +91,44 @@ btnDelete.forEach(function (del) {
     });
 });
 
-/* ================================================= */
+// Sort tasks
+items.forEach(item => {
+    item.addEventListener('dragstart', () => {
+        // Добавление класса перетаскивания к элементу после задержки
+        setTimeout(() => item.classList.add('dragging'), 0);
+    });
+    // Удаление класса перетаскивания из элемента в событии dragend
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+});
 
+const initSortableList = (e) => {
+    e.preventDefault();
+    const draggingItem = sortableList.querySelector('.dragging');
+
+    // Получение всех элементов, кроме текущего перетаскивания и создания массива из них
+    const siblings = [...sortableList.querySelectorAll('.item:not(.dragging)')];
+
+    // Поиск родственного элемента, после которого следует разместить
+    let nextSibling = siblings.find(sibling => {
+        return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+    });
+
+    // Вставка перетаскиваемого элемента перед найденным родственным элементом
+    sortableList.insertBefore(draggingItem, nextSibling);
+
+    // Делаю всем дочерним элементам массивоподобным
+    const elements = document.getElementsByClassName("item");
+
+    // Создаю массив, также присваиваю ключ => значение
+    const sortedIds = Array.from(elements).map(element => element.dataset.id);
+
+    // console.log(sortedIds);
+
+    const url = "handler.php?arrid=" + sortedIds;
+    xhttp.open("GET", url, true);
+    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
+    xhttp.send();
+}
+
+sortableList.addEventListener('dragover', initSortableList);
+sortableList.addEventListener('dragenter', e => e.preventDefault())
