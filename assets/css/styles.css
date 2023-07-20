@@ -9,6 +9,12 @@
     --blue: #357edd;
     --gray: #808080;
     --black: #555555;
+
+    --radio-circle-red: #e74c3c;
+    --radio-circle-blue: #3498db;
+    --radio-circle-yellow: #f1c40f;
+    --radio-circle-gray: #808080;
+
 }
 
 * {
@@ -332,9 +338,17 @@ main {
 
 .drag {
     position: absolute;
-    display: flex;
     cursor: move;
-    margin: -25px 0 0 -30px;
+    margin: 25px 0 0 -30px;
+    opacity: 0;
+}
+
+.item:hover .drag {
+    opacity: 1;
+}
+
+.item:not.dragging {
+    opacity: 0;
 }
 
 .task {
@@ -352,14 +366,24 @@ main {
     /*display: block;*/
 }
 
+.content {
+    background-color: #404352;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
 .text {
     border: none;
     outline: none;
     background-color: #404352;
     color: var(--light);
     padding: 16px;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    margin-left: 30px;
+}
+
+.text-line-through {
+    color: var(--black);
+    text-decoration: line-through;
 }
 
 .action-button {
@@ -417,8 +441,4 @@ main {
 
 .fade-out {
     display: none;
-}
-
-.item:not.dragging {
-    opacity: 0;
 }

@@ -46,7 +46,8 @@ $date = date('Y-m-d H:i:s');
 
 // Insert into db
 if (!empty($_POST['name-task'])) {
-    $task = htmlspecialchars(trim($_POST['name-task']));
+    $task = htmlspecialchars($_POST['name-task']);
+    $task = trim($_POST['name-task']);
     mysqli_query($conn, "INSERT INTO `task` (`title`, `datetime`) VALUES ('$task', '$date')");
 
     header('Location: /');
@@ -55,7 +56,9 @@ if (!empty($_POST['name-task'])) {
 // Rename task
 if (isset($_GET['value']) && isset($_GET['id'])) {
     $title = htmlspecialchars($_GET['value'], ENT_QUOTES);
-    $id = htmlspecialchars(trim($_GET['id']));
+    $title = trim($_GET['value']);
+    $id = htmlspecialchars($_GET['id']);
+    $id = trim($_GET['id']);
 
     mysqli_query($conn, "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'");
 }
@@ -70,12 +73,32 @@ if (isset($_GET['delid'])) {
 
 // Sort tasks
 if (isset($_GET['arrid'])) {
-    $arrIds = explode(",", htmlspecialchars(trim($_GET['arrid'])));
+    $arrIds = explode(",", htmlspecialchars($_GET['arrid']));
     // Инкрементирую ключ $k, для того чтобы сортировка начиналось не с 0, а 1.
     // Это сделано для того, когда добавляется задача у нее по умолчанию сортировка с 0
     // Сама задача находится верху списка.
-    foreach ($arrIds as $k => $v){
+    foreach ($arrIds as $k => $v) {
         $k++;
         mysqli_query($conn, "UPDATE `task` SET sortable='$k' WHERE id='$v'");
     }
+}
+
+// When click by checkbox also crossed out task
+if (isset($_GET['crossedOut']) && $_GET['id']) {
+    $checkbox = htmlspecialchars($_GET['crossedOut']);
+    $checkbox = trim($_GET['crossedOut']);
+    $id = htmlspecialchars($_GET['id']);
+    $id = trim($_GET['id']);
+
+    mysqli_query($conn, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
+}
+
+// When you uncheck the box, remove the crossed out tasks
+if (isset($_GET['removeCrossedOut']) && $_GET['id']) {
+    $checkbox = htmlspecialchars($_GET['removeCrossedOut']);
+    $checkbox = trim($_GET['removeCrossedOut']);
+    $id = htmlspecialchars($_GET['id']);
+    $id = trim($_GET['id']);
+
+    mysqli_query($conn, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
 }

@@ -17,6 +17,7 @@ include 'handler.php'; ?>
 
     <!--  Custom Icons  -->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/switch.css">
 </head>
 <body>
 
@@ -109,6 +110,22 @@ include 'handler.php'; ?>
         </div>
         <form action="./handler.php" method="post" class="hidden-task-form" id="task-form">
             <input type="text" name="name-task" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
+            <div class="action-menu">
+                <div class="category-menu">
+                    <ul class="category-list">
+                        <li class="category-item">Входящие</li>
+                        <li class="category-item">Сегодня</li>
+                        <li class="category-item">Предстоящее</li>
+                    </ul>
+                </div>
+                <div class="priority-menu">
+                    <ul class="priority-list">
+                        <li class="priority-item">1 Приоритет</li>
+                        <li class="priority-item">2 Приоритет</li>
+                        <li class="priority-item">3 Приоритет</li>
+                    </ul>
+                </div>
+            </div>
             <div class="action-submit">
                 <input type="submit" id="cancel-task" class="btn cancel-task" value="Отмена" return false>
                 <input type="submit" id="add-new-task" class="btn addtask" value="Добавить задачу" disabled>
@@ -119,28 +136,59 @@ include 'handler.php'; ?>
             <?php
             $sql = mysqli_query($conn, "SELECT * FROM `task` ORDER BY sortable");
             if (mysqli_num_rows($sql) > 0) :
-                while ($task = mysqli_fetch_assoc($sql)) : ?>
-                    <li class="item" draggable="true" data-id="<?= $task['id']; ?>">
-                        <div class="task" data-id="<?= $task['id']; ?>">
-                            <div class="content">
-                                <input type="text" class="text" id="task-text" data-id="<?= $task['id']; ?>"
-                                       value="<?= $task['title']; ?>" readonly>
-                                <span class="material-symbols-outlined drag">drag_indicator</span>
+                while ($task = mysqli_fetch_assoc($sql)) :
+                    if ($task['checkbox'] == 1) : ?>
+                        <li class="item" id="<?= $task['checkbox']; ?>" data-id="<?= $task['id']; ?>">
+                            <span class="material-symbols-outlined drag" draggable="true" title="Переместить задачу">drag_indicator</span>
+                            <div class="task" data-id="<?= $task['id']; ?>">
+                                <div class="content">
+                                    <label class="circle circle-blue circle-gray" data-id="<?= $task['id']; ?>">
+                                        <input type="checkbox" class="checkbox-task" id="<?= $task['id']; ?>" checked>
+                                        <span></span>
+                                    </label>
+                                    <input type="text" class="text text-line-through" id="task-text"
+                                           data-id="<?= $task['id']; ?>"
+                                           value="<?= $task['title']; ?>" readonly>
+                                </div>
+                                <div class="action-button">
+                                    <button class="edit" data-id="<?= $task['id']; ?>" title="Редактировать задачу">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="delete" data-id="<?= $task['id']; ?>" title="Удалить задачу">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
                             </div>
-
-                            <div class="action-button">
-                                <button class="edit" data-id="<?= $task['id']; ?>">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="delete" data-id="<?= $task['id']; ?>">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
+                        </li>
+                    <?php
+                    endif;
+                    if ($task['checkbox'] == 0) : ?>
+                        <li class="item" id="<?= $task['checkbox']; ?>" data-id="<?= $task['id']; ?>">
+                            <span class="material-symbols-outlined drag" draggable="true" title="Переместить задачу">drag_indicator</span>
+                            <div class="task" data-id="<?= $task['id']; ?>">
+                                <div class="content">
+                                    <label class="circle circle-blue" data-id="<?= $task['id']; ?>">
+                                        <input type="checkbox" class="checkbox-task " id="<?= $task['id']; ?>">
+                                        <span></span>
+                                    </label>
+                                    <input type="text" class="text" id="task-text" data-id="<?= $task['id']; ?>"
+                                           value="<?= $task['title']; ?>" readonly>
+                                </div>
+                                <div class="action-button">
+                                    <button class="edit" data-id="<?= $task['id']; ?>" title="Редактировать задачу">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="delete" data-id="<?= $task['id']; ?>" title="Удалить задачу">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                <?php
+                        </li>
+                    <?php
+                    endif;
                 endwhile;
-            endif; ?>
+            endif;
+            ?>
         </ul>
     </section>
 </main>

@@ -15,6 +15,8 @@ const xhttp = new XMLHttpRequest();
 const tasks = document.querySelectorAll('.task');
 const sortableList = document.querySelector('.sortable-list');
 const items = document.querySelectorAll('.item');
+const checkboxTasks = document.querySelectorAll('.checkbox-task');
+const textInput = document.querySelectorAll('.text');
 
 
 // Toggle sidebar
@@ -122,9 +124,7 @@ const initSortableList = (e) => {
     // Создаю массив, также присваиваю ключ => значение
     const sortedIds = Array.from(elements).map(element => element.dataset.id);
 
-    // console.log(sortedIds);
-
-    const url = "handler.php?arrid=" + sortedIds;
+    let url = "handler.php?arrid=" + sortedIds;
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader('Content-Type', 'application/text/plain')
     xhttp.send();
@@ -132,3 +132,39 @@ const initSortableList = (e) => {
 
 sortableList.addEventListener('dragover', initSortableList);
 sortableList.addEventListener('dragenter', e => e.preventDefault())
+
+// Click by checkbox or click uncheck. Also remove crossed out task
+const circles = document.querySelectorAll('.circle');
+checkboxTasks.forEach(function (checkboxTask) {
+    checkboxTask.addEventListener('click', () => {
+        textInput.forEach(function (text) {
+            circles.forEach(function (circle) {
+                items.forEach(function (item) {
+                    if (checkboxTask.id == text.dataset.id && checkboxTask.id == circle.dataset.id) {
+                        if (circle.classList[1] != 'circle-gray') {
+                            if (item.dataset.id == checkboxTask.id) {
+                                if (circle.classList[2] != 'circle-gray') {
+                                    checkboxTask.setAttribute('checked', '');
+                                    circle.classList.add('circle-gray');
+                                    text.classList.add('text-line-through');
+                                    let url = "handler.php?crossedOut=" + 1 + "&id=" + checkboxTask.id;
+                                    xhttp.open("GET", url, true);
+                                    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
+                                    xhttp.send();
+                                } else if (circle.classList[2] == 'circle-gray') {
+                                    circle.classList.remove('circle-gray');
+                                    checkboxTask.removeAttribute('checked');
+                                    text.classList.remove('text-line-through');
+                                    let url = "handler.php?removeCrossedOut=" + 0 + "&id=" + checkboxTask.id;
+                                    xhttp.open("GET", url, true);
+                                    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
+                                    xhttp.send();
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    });
+});
