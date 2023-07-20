@@ -1,0 +1,121 @@
+.circle > input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.circle > span {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    user-select: none;
+    margin: 16px 0 0 16px;
+}
+
+/* red */
+.circle-red > span::before {
+    content: "\2713";
+    cursor: pointer;
+    height: 15px;
+    width: 13px;
+    border: 2px solid var(--radio-circle-red);
+    border-radius: 50%;
+    padding: 0 0 0 4px;
+    font-size: 10px;
+    color: #404352;
+}
+
+.circle-red > span:hover::before {
+    content: "\2713";
+    color: var(--radio-circle-red);
+    font-size: 10px;
+    line-height: 15px;
+    transition: 0.5s;
+    background: rgba(100, 43, 39, 0.1);
+}
+
+.circle-red > input:checked + span::before {
+    color: var(--radio-circle-red);
+    padding: 0 0 0 4px;
+}
+
+/* blue */
+.circle-blue > span::before {
+    content: "\2713";
+    cursor: pointer;
+    height: 15px;
+    width: 13px;
+    border: 2px solid var(--radio-circle-blue);
+    border-radius: 50%;
+    padding: 0 0 0 4px;
+    font-size: 10px;
+    color: #404352;
+}
+
+.circle-blue > span:hover::before {
+    content: "\2713";
+    color: var(--radio-circle-blue);
+    font-size: 10px;
+    line-height: 15px;
+    transition: 0.5s;
+    background: rgb(36, 71, 94);
+}
+
+.circle-blue > input:checked + span::before {
+    color: var(--radio-circle-blue);
+    padding: 0 0 0 4px;
+}
+
+/* yellow */
+.circle-yellow > span::before {
+    content: "\2713";
+    cursor: pointer;
+    height: 15px;
+    width: 13px;
+    border: 2px solid var(--radio-circle-yellow);
+    border-radius: 50%;
+    padding: 0 0 0 4px;
+    font-size: 10px;
+    color: #404352;
+}
+
+.circle-yellow > span:hover::before {
+    content: "\2713";
+    color: var(--radio-circle-yellow);
+    font-size: 10px;
+    line-height: 15px;
+    transition: 0.5s;
+    background: rgb(82, 72, 32);
+}
+
+.circle-yellow > input:checked + span::before {
+    color: var(--radio-circle-yellow);
+    padding: 0 0 0 4px;
+}
+
+/* gray */
+.circle-gray > span::before {
+    content: "\2713";
+    cursor: pointer;
+    height: 15px;
+    width: 13px;
+    border: 2px solid var(--radio-circle-gray);
+    border-radius: 50%;
+    padding: 0 0 0 4px;
+    font-size: 10px;
+    color: #404352;
+}
+
+.circle-gray > span:hover::before {
+    content: "\2713";
+    color: var(--radio-circle-gray);
+    font-size: 10px;
+    line-height: 15px;
+    transition: 0.5s;
+    background: rgb(59, 59, 59);
+}
+
+.circle-gray > input:checked + span::before {
+    color: var(--radio-circle-gray);
+    padding: 0 0 0 4px;
+}
