@@ -1,3 +1,4 @@
+const xhr = new XMLHttpRequest();
 const burgerMenu = document.querySelector('#burger-menu');
 const sidebar = document.querySelector('#sidebar');
 const offsetTaskList = document.querySelector('.task-list');
@@ -8,15 +9,21 @@ const taskForm = document.querySelector('#task-form');
 const btnCancelTask = document.querySelector('#cancel-task');
 const btnNewTask = document.querySelector('#add-new-task');
 const taskInputField = document.querySelector('#task-form-input');
-const btnEdit = document.querySelectorAll('.edit');
-const btnDelete = document.querySelectorAll('.delete');
+const btnEdit = document.querySelectorAll('#edit');
+const btnDelete = document.querySelectorAll('#btn-delete');
 const taskText = document.querySelectorAll('#task-text');
-const xhttp = new XMLHttpRequest();
 const tasks = document.querySelectorAll('.task');
 const sortableList = document.querySelector('.sortable-list');
 const items = document.querySelectorAll('.item');
 const checkboxTasks = document.querySelectorAll('.checkbox-task');
 const textInput = document.querySelectorAll('.text');
+const dropTitleCat = document.querySelector('.drop-title-cat');
+const dropDownList = document.querySelector('#dropdownListCat');
+const dropItems = document.querySelectorAll('#drop-item');
+const dropTitlePrio = document.querySelector('.drop-title-prio');
+const dropDownListPrio = document.querySelector('#dropdownListPrio');
+const dropItemsPrio = document.querySelectorAll('#drop-item-prio');
+const circles = document.querySelectorAll('.circle');
 
 
 // Toggle sidebar
@@ -69,8 +76,10 @@ btnEdit.forEach(function (editBtn) {
                     task.selectionStart = task.value.length
                 } else {
                     editBtn.innerHTML = edit;
-                    xhttp.open("GET", "handler.php?value=" + task.value + '&id=' + task.dataset.id, true);
-                    xhttp.send();
+                    let data = "value=" + task.value + '&id=' + task.dataset.id
+                    xhr.open("POST", "handler.php");
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
                     task.setAttribute('readonly', 'readonly');
                 }
             }
@@ -85,8 +94,10 @@ btnDelete.forEach(function (del) {
             task.addEventListener('click', () => {
                 if (del.dataset.id == task.dataset.id) {
                     task.classList.add('fade-out');
-                    xhttp.open("GET", "handler.php?delid=" + del.dataset.id, true);
-                    xhttp.send();
+                    let data = "deltask=" + del.dataset.id;
+                    xhr.open("POST", "handler.php");
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.send(data);
                 }
             });
         });
@@ -124,17 +135,16 @@ const initSortableList = (e) => {
     // Создаю массив, также присваиваю ключ => значение
     const sortedIds = Array.from(elements).map(element => element.dataset.id);
 
-    let url = "handler.php?arrid=" + sortedIds;
-    xhttp.open("GET", url, true);
-    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
-    xhttp.send();
+    let data = "arrid=" + sortedIds;
+    xhr.open("POST", "handler.php");
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(data);
 }
 
 sortableList.addEventListener('dragover', initSortableList);
 sortableList.addEventListener('dragenter', e => e.preventDefault())
 
 // Click by checkbox or click uncheck. Also remove crossed out task
-const circles = document.querySelectorAll('.circle');
 checkboxTasks.forEach(function (checkboxTask) {
     checkboxTask.addEventListener('click', () => {
         textInput.forEach(function (text) {
@@ -147,18 +157,20 @@ checkboxTasks.forEach(function (checkboxTask) {
                                     checkboxTask.setAttribute('checked', '');
                                     circle.classList.add('circle-gray');
                                     text.classList.add('text-line-through');
-                                    let url = "handler.php?crossedOut=" + 1 + "&id=" + checkboxTask.id;
-                                    xhttp.open("GET", url, true);
-                                    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
-                                    xhttp.send();
+
+                                    let data = "removeCrossedOut=" + 1 + "&id=" + checkboxTask.id;
+                                    xhr.open("POST", "handler.php");
+                                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                    xhr.send(data);
                                 } else if (circle.classList[2] == 'circle-gray') {
                                     circle.classList.remove('circle-gray');
                                     checkboxTask.removeAttribute('checked');
                                     text.classList.remove('text-line-through');
-                                    let url = "handler.php?removeCrossedOut=" + 0 + "&id=" + checkboxTask.id;
-                                    xhttp.open("GET", url, true);
-                                    xhttp.setRequestHeader('Content-Type', 'application/text/plain')
-                                    xhttp.send();
+
+                                    let data = "removeCrossedOut=" + 0 + "&id=" + checkboxTask.id;
+                                    xhr.open("POST", "handler.php");
+                                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                    xhr.send(data);
                                 }
                             }
                         }
@@ -167,4 +179,55 @@ checkboxTasks.forEach(function (checkboxTask) {
             });
         });
     });
+});
+
+// Dropdown lists for category
+dropTitleCat.addEventListener('click', function () {
+    dropDownList.classList.toggle('show-list-cat');
+    dropDownList.classList.remove('close-list-cat');
+
+    dropItems.forEach(function (dropItem) {
+        dropItem.addEventListener('click', e => {
+            dropTitleCat.dataset.id = dropItem.dataset.id;
+            dropTitleCat.innerHTML = e.target.innerHTML;
+            dropDownList.classList.add('close-list-cat');
+            dropDownList.classList.remove('show-list-cat');
+        });
+    });
+});
+
+// Dropdown lists for priority
+dropTitlePrio.addEventListener('click', function () {
+    dropDownListPrio.classList.toggle('show-list-prio');
+    dropDownListPrio.classList.remove('close-list-prio');
+
+    dropItemsPrio.forEach(function (dropItem) {
+        dropItem.addEventListener('click', e => {
+            dropTitlePrio.dataset.id = dropItem.dataset.id;
+            if (dropItem.dataset.id == 1) {
+                dropTitlePrio.innerHTML = `<span class="wrapper-circle dropdown-circle-red"></span>
+                    <span class="dropdown-content-title">${e.target.innerHTML}</span>`;
+            } else if (dropItem.dataset.id == 2) {
+                dropTitlePrio.innerHTML = `<span class="wrapper-circle dropdown-circle-blue"></span>
+                    <span class="dropdown-content-title">${e.target.innerHTML}</span>`;
+            } else if (dropItem.dataset.id == 3) {
+                dropTitlePrio.innerHTML = `<span class="wrapper-circle dropdown-circle-yellow"></span> 
+                    <span class="dropdown-content-title">${e.target.innerHTML}</span>`;
+            }
+
+            dropDownListPrio.classList.add('close-list-prio');
+            dropDownListPrio.classList.remove('show-list-prio');
+        });
+    });
+});
+
+// Task form
+taskForm.addEventListener('submit', () => {
+    let resultCat = dropTitleCat.dataset.id ? dropTitleCat.dataset.id : 2;
+    let resultPrio = dropTitlePrio.dataset.id ? dropTitlePrio.dataset.id : 1;
+    let url = "handler.php";
+    let data = 'title=' + taskInputField.value + '&category=' + resultCat + '&priority=' + resultPrio;
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(data);
 });
