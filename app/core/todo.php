@@ -1,21 +1,6 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$db = "todo";
-
-// Create connection
-$conn = mysqli_connect($hostname, $username, $password, $db);
-
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require_once 'connection.php';
 
 $days = [
     '0' => 'Вс',
@@ -51,7 +36,7 @@ if (isset($_POST['title']) && isset($_POST['category']) && isset($_POST['priorit
     $prio = htmlspecialchars(trim($_POST['priority']));
 
     mysqli_query(
-        $conn,
+        $connect,
         "INSERT INTO `task` (`title`, `category`, `priority`, `datetime`)VALUES('$title','$cat','$prio','$date')"
     );
 }
@@ -61,13 +46,13 @@ if (isset($_POST['value']) && isset($_POST['id'])) {
     $title = htmlspecialchars(trim($_POST['value'], ENT_QUOTES));
     $id = htmlspecialchars(trim($_POST['id']));
 
-    mysqli_query($conn, "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'");
+    mysqli_query($connect, "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'");
 }
 
 // Delete task
 if (isset($_POST['deltask'])) {
     $delid = htmlspecialchars(trim($_POST['deltask']));
-    mysqli_query($conn, "DELETE FROM `task` WHERE id='$delid'");
+    mysqli_query($connect, "DELETE FROM `task` WHERE id='$delid'");
 }
 
 // Sort tasks
@@ -78,7 +63,7 @@ if (isset($_POST['arrid'])) {
     // Сама задача находится верху списка.
     foreach ($arrIds as $k => $v) {
         $k++;
-        mysqli_query($conn, "UPDATE `task` SET sortable='$k' WHERE id='$v'");
+        mysqli_query($connect, "UPDATE `task` SET sortable='$k' WHERE id='$v'");
     }
 }
 
@@ -87,7 +72,7 @@ if (isset($_POST['crossedOut']) && isset($_POST['id'])) {
     $checkbox = htmlspecialchars(trim($_POST['crossedOut']));
     $id = htmlspecialchars(trim($_POST['id']));
 
-    mysqli_query($conn, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
+    mysqli_query($connect, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
 }
 
 // When you uncheck the box, remove the crossed out tasks
@@ -95,5 +80,5 @@ if (isset($_POST['removeCrossedOut']) && isset($_POST['id'])) {
     $checkbox = htmlspecialchars(trim($_POST['removeCrossedOut']));
     $id = htmlspecialchars(trim($_POST['id']));
 
-    mysqli_query($conn, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
-}   
+    mysqli_query($connect, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
+}
