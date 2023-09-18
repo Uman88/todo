@@ -25,7 +25,6 @@ const dropDownListPrio = document.querySelector('#dropdownListPrio');
 const dropItemsPrio = document.querySelectorAll('#drop-item-prio');
 const circles = document.querySelectorAll('.circle');
 
-
 // Toggle sidebar
 burgerMenu.addEventListener('click', function () {
     if (window.innerWidth <= 992) {
@@ -225,7 +224,7 @@ dropTitlePrio.addEventListener('click', function () {
 taskForm.addEventListener('submit', () => {
     let resultCat = dropTitleCat.dataset.id ? dropTitleCat.dataset.id : 2;
     let resultPrio = dropTitlePrio.dataset.id ? dropTitlePrio.dataset.id : 1;
-    let url = "handler.php";
+    let url = "todo.php";
     let data = 'title=' + taskInputField.value + '&category=' + resultCat + '&priority=' + resultPrio;
     xhr.open("POST", url);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
