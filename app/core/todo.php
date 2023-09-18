@@ -31,54 +31,58 @@ $date = date('Y-m-d H:i:s');
 
 // Insert into db
 if (isset($_POST['title']) && isset($_POST['category']) && isset($_POST['priority'])) {
-    $title = htmlspecialchars(trim($_POST['title']));
-    $cat = htmlspecialchars(trim($_POST['category']));
-    $prio = htmlspecialchars(trim($_POST['priority']));
+    $title = filter_var(trim($_POST['title']), FILTER_SANITIZE_STRING);
+    $cat = filter_var(trim($_POST['category']), FILTER_VALIDATE_INT);
+    $prio = filter_var(trim($_POST['priority']), FILTER_VALIDATE_INT);
 
-    mysqli_query(
-        $connect,
-        "INSERT INTO `task` (`title`, `category`, `priority`, `datetime`)VALUES('$title','$cat','$prio','$date')"
-    );
+    $insert = "INSERT INTO `task` (`title`, `category`, `priority`, `datetime`)VALUES('$title','$cat','$prio','$date')";
+    $conn->query($insert);
 }
 
 // Rename task
 if (isset($_POST['value']) && isset($_POST['id'])) {
-    $title = htmlspecialchars(trim($_POST['value'], ENT_QUOTES));
-    $id = htmlspecialchars(trim($_POST['id']));
+    $title = filter_var(trim($_POST['value'], FILTER_SANITIZE_STRING));
+    $id = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT);
 
-    mysqli_query($connect, "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'");
+    $rename = "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'";
+    $conn->query($rename);
 }
 
 // Delete task
 if (isset($_POST['deltask'])) {
-    $delid = htmlspecialchars(trim($_POST['deltask']));
-    mysqli_query($connect, "DELETE FROM `task` WHERE id='$delid'");
+    $delid = filter_var(trim($_POST['deltask']), FILTER_VALIDATE_INT);
+
+    $delete = "DELETE FROM `task` WHERE id='$delid'";
+    $conn->query($delete);
 }
 
 // Sort tasks
 if (isset($_POST['arrid'])) {
-    $arrIds = explode(",", htmlspecialchars(trim($_POST['arrid'])));
+    $arrIds = explode(",", filter_var(trim($_POST['arrid'])), FILTER_VALIDATE_INT);
     // Инкрементирую ключ $k, для того чтобы сортировка начиналось не с 0, а 1.
     // Это сделано для того, когда добавляется задача у нее по умолчанию сортировка с 0
     // Сама задача находится верху списка.
     foreach ($arrIds as $k => $v) {
         $k++;
-        mysqli_query($connect, "UPDATE `task` SET sortable='$k' WHERE id='$v'");
+        $sort = "UPDATE `task` SET sortable='$k' WHERE id='$v'";
+        $conn->query($sort);
     }
 }
 
 // When click by checkbox also crossed out task
 if (isset($_POST['crossedOut']) && isset($_POST['id'])) {
-    $checkbox = htmlspecialchars(trim($_POST['crossedOut']));
-    $id = htmlspecialchars(trim($_POST['id']));
+    $checkbox = filter_var(trim($_POST['crossedOut']), FILTER_VALIDATE_INT);
+    $id = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT);
 
-    mysqli_query($connect, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
+    $crossedOut = "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'";
+    $conn->query($crossedOut);
 }
 
 // When you uncheck the box, remove the crossed out tasks
 if (isset($_POST['removeCrossedOut']) && isset($_POST['id'])) {
-    $checkbox = htmlspecialchars(trim($_POST['removeCrossedOut']));
-    $id = htmlspecialchars(trim($_POST['id']));
+    $checkbox = filter_var(trim($_POST['removeCrossedOut']), FILTER_VALIDATE_INT);
+    $id = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT);
 
-    mysqli_query($connect, "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'");
+    $removeCrossedOut = "UPDATE `task` SET checkbox='$checkbox' WHERE id='$id'";
+    $conn->query($removeCrossedOut);
 }
