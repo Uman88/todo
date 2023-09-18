@@ -23,11 +23,11 @@
             <ul class="user-list">
                 <li class="user-list-item">
                     <span class="material-symbols-outlined">settings</span>
-                    <a href="#">Профиль</a>
+                    <a href="/index.php?route=edit-profile">Профиль</a>
                 </li>
                 <li class="user-list-item">
                     <span class="material-symbols-outlined">logout</span>
-                    <a href="#">Выход</a>
+                    <a href="/index.php?route=logouts">Выход</a>
                 </li>
             </ul>
         </div>

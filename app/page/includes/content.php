@@ -38,9 +38,10 @@
                     </div>
                     <div id="dropdownListCat" class="dropdown-content-cat">
                         <?php
-                        $cats = mysqli_query($conn, "SELECT * FROM `category`");
-                        if (mysqli_num_rows($cats) > 0) :
-                            while ($cat = mysqli_fetch_assoc($cats)) : ?>
+                        $sql1 = "SELECT * FROM `category`";
+                        $cats = $conn->query($sql1);
+                        if ($cats->num_rows > 0) :
+                            while ($cat = $cats->fetch_assoc()) : ?>
                                 <div id="drop-item" data-id="<?= $cat['id']; ?>">
                                     <?= $cat['title'] == 'Сегодня' ? '<span class="calendar-date">' . date(
                                             "j"
@@ -83,11 +84,10 @@
 
         <ul class="sortable-list">
             <?php
-            $sql = mysqli_query($conn, "SELECT * FROM `task` ORDER BY sortable");
-            if (mysqli_num_rows($sql) > 0) :
-                while ($task = mysqli_fetch_assoc($sql)) : ?>
-
-
+            $sql2 = "SELECT * FROM `task` ORDER BY sortable";
+            $tasks = $conn->query($sql2);
+            if ($tasks->num_rows > 0) :
+                while ($task = $tasks->fetch_assoc()) : ?>
                     <li class="item" id="<?= $task['checkbox']; ?>" data-id="<?= $task['id']; ?>">
                         <span class="material-symbols-outlined drag" draggable="true" title="Переместить задачу">drag_indicator</span>
                         <div class="task" data-id="<?= $task['id']; ?>">
@@ -139,7 +139,6 @@
                                                 <?php
                                                 endif; ?>
                             </div>
-
                             <div class="action-button">
                                 <button class="edit" id="edit" data-id="<?= $task['id']; ?>"
                                         title="Редактировать задачу">
