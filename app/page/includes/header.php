@@ -20,10 +20,12 @@
         </div>
         <!-- Open user menu -->
         <div class="user-settings">
+            <div class="user-avatar"><img src="<?= IMAGES; ?>/no-avatar.png"></div>
+            <div class="username">Привет&nbsp;<span>Uman!</span></div>
             <ul class="user-list">
                 <li class="user-list-item">
                     <span class="material-symbols-outlined">settings</span>
-                    <a href="/index.php?route=edit-profile">Профиль</a>
+                    <a href="/index.php?route=profile">Профиль</a>
                 </li>
                 <li class="user-list-item">
                     <span class="material-symbols-outlined">logout</span>

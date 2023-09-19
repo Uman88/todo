@@ -93,14 +93,32 @@ header {
 .user-settings {
     display: none;
     position: absolute;
-    width: 146px;
+    /*width: 146px;*/
+    width: 200px;
     background: #21232d;
     color: var(--light);
-    margin: 50px 0 0 -62px;
+    margin: 50px 0 0 -116px;
 }
 
 .open-user-menu {
     display: block;
+}
+
+.user-avatar,.username {
+    display: flex;
+    justify-content: center;
+}
+
+.user-avatar img {
+    width: 150px;
+}
+
+.username span {
+    color: var(--purple);
+}
+
+.username {
+    margin-bottom: 10px;
 }
 
 .user-list {
@@ -682,8 +700,61 @@ p, a {
 }
 /* End Signin and Signup */
 
+/* 404 */
+.mainbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 600px;
+    width: 600px;
+    position: relative;
+}
 
+.err {
+    color: #ffffff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11rem;
+    position: absolute;
+    left: 20%;
+    top: 8%;
+}
 
+.far {
+    position: absolute;
+    font-size: 8.5rem;
+    left: 42%;
+    top: 15%;
+    color: #ffffff;
+}
+
+.err2 {
+    color: #ffffff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11rem;
+    position: absolute;
+    left: 68%;
+    top: 8%;
+}
+
+.msg-404 {
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.6rem;
+    position: absolute;
+    left: 16%;
+    top: 45%;
+    width: 75%;
+}
+
+.page-not-found {
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+/* End of 404 */
 
 /* Media Queries */
 

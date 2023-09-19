@@ -1,7 +1,5 @@
 <?php
 
-
-
 define('APP_NAME', 'TODO-List');
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 define('CORE', ROOT . 'app/core');
