@@ -198,6 +198,13 @@ header {
     cursor: pointer;
 }
 
+.qty-tasks {
+    float: right;
+    font-size: 0.7rem;
+    color: var(--gray);
+    margin-top: 4px;
+}
+
 .calendar-date {
     position: absolute;
     font-size: 7px;

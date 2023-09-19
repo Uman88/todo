@@ -229,4 +229,5 @@ taskForm.addEventListener('submit', () => {
     xhr.open("POST", url);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(data);
+
 });
