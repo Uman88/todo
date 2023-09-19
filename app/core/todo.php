@@ -31,17 +31,19 @@ $date = date('Y-m-d H:i:s');
 
 // Insert into db
 if (isset($_POST['title']) && isset($_POST['category']) && isset($_POST['priority'])) {
-    $title = filter_var(trim($_POST['title']), FILTER_SANITIZE_STRING);
+    $title = filter_var(trim($_POST['title']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $cat = filter_var(trim($_POST['category']), FILTER_VALIDATE_INT);
     $prio = filter_var(trim($_POST['priority']), FILTER_VALIDATE_INT);
+    $user = $_SESSION['user']['id'];
 
-    $insert = "INSERT INTO `task` (`title`, `category`, `priority`, `datetime`)VALUES('$title','$cat','$prio','$date')";
+    $insert = "INSERT INTO `task` (`title`, `id_user`, `category`, `priority`, `datetime`)
+               VALUES('$title','$user','$cat','$prio','$date')";
     $conn->query($insert);
 }
 
 // Rename task
 if (isset($_POST['value']) && isset($_POST['id'])) {
-    $title = filter_var(trim($_POST['value'], FILTER_SANITIZE_STRING));
+    $title = filter_var(trim($_POST['value'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $id = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT);
 
     $rename = "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'";

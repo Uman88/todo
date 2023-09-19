@@ -4,10 +4,10 @@ session_start();
 
 require_once 'connection.php';
 
-$name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
+$name = filter_var(trim($_POST['name']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email = filter_var(strtolower(trim($_POST['email'])), FILTER_VALIDATE_EMAIL);
-$password = filter_var(trim($_POST['password']), FILTER_SANITIZE_STRING);
-$password_confirm = filter_var(trim($_POST['password_confirm']), FILTER_SANITIZE_STRING);
+$password = filter_var(trim($_POST['password']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$password_confirm = filter_var(trim($_POST['password_confirm']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 // Checking regular expressions for the correct address entered
 if (!preg_match('~^[a-z0-9-_\.]+@[a-z0-9-\.]+\.\S{2,8}$~', $email)) {
