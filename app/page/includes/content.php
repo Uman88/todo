@@ -28,7 +28,7 @@
             <span><i class="material-symbols-outlined">add</i>Добавить задачу</span>
         </div>
 
-        <form class="hidden-task-form" id="task-form">
+        <form method="post" id="task-form" class="hidden-task-form">
             <input type="text" name="name-task" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
             <div class="action">
                 <div class="dropdown">
@@ -84,74 +84,80 @@
 
         <ul class="sortable-list">
             <?php
-            $sql2 = "SELECT * FROM `task` ORDER BY sortable";
+            $id_url = filter_var(trim($_GET['id']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $id_user = $_SESSION['user']['id'];
+            $sql2 = "SELECT * FROM `task` WHERE `id_user`='$id_user' ORDER BY sortable";
             $tasks = $conn->query($sql2);
             if ($tasks->num_rows > 0) :
-                while ($task = $tasks->fetch_assoc()) : ?>
-                    <li class="item" id="<?= $task['checkbox']; ?>" data-id="<?= $task['id']; ?>">
-                        <span class="material-symbols-outlined drag" draggable="true" title="Переместить задачу">drag_indicator</span>
-                        <div class="task" data-id="<?= $task['id']; ?>">
+                while ($task = $tasks->fetch_assoc()) :
+                    if ($id_url === $task['category']) :
+                        ?>
+                        <li class="item" id="<?= $task['checkbox']; ?>" data-id="<?= $task['id']; ?>">
+                            <span class="material-symbols-outlined drag" draggable="true" title="Переместить задачу">drag_indicator</span>
+                            <div class="task" data-id="<?= $task['id']; ?>">
 
-                            <div class="content">
-                                <?php
-                                if ($task['checkbox'] == 1) :
-                                if ($task['priority'] == 1) : ?>
-                                <label class="circle circle-red circle-gray" data-id="<?= $task['id']; ?>">
+                                <div class="content">
                                     <?php
-                                    endif;
-                                    if ($task['priority'] == 2) : ?>
-                                    <label class="circle circle-blue circle-gray" data-id="<?= $task['id']; ?>">
+                                    if ($task['checkbox'] == 1 && $task['priority'] == 1) :
+                                    if ($task['priority'] == 1) : ?>
+                                    <label class="circle circle-red circle-gray" data-id="<?= $task['id']; ?>">
                                         <?php
                                         endif;
-                                        if ($task['priority'] == 3) : ?>
-                                        <label class="circle circle-yellow circle-gray" data-id="<?= $task['id']; ?>">
-                                            <?php
-                                            endif; ?>
-                                            <input type="checkbox" class="checkbox-task" id="<?= $task['id']; ?>"
-                                                   checked>
-                                            <span></span>
-                                        </label>
-                                        <input type="text" class="text text-line-through" id="task-text"
-                                               data-id="<?= $task['id']; ?>"
-                                               value="<?= $task['title']; ?>" readonly>
-                                        <?php
-                                        endif;
-                                        if ($task['checkbox'] == 0) :
-                                        if ($task['priority'] == 1) : ?>
-                                        <label class="circle circle-red" data-id="<?= $task['id']; ?>">
+                                        if ($task['priority'] == 2) : ?>
+                                        <label class="circle circle-blue circle-gray" data-id="<?= $task['id']; ?>">
                                             <?php
                                             endif;
-                                            if ($task['priority'] == 2) : ?>
-                                            <label class="circle circle-blue" data-id="<?= $task['id']; ?>">
-                                                <?php
-                                                endif;
-                                                if ($task['priority'] == 3) : ?>
-                                                <label class="circle circle-yellow" data-id="<?= $task['id']; ?>">
-                                                    <?php
-                                                    endif; ?>
-                                                    <input type="checkbox" class="checkbox-task "
-                                                           id="<?= $task['id']; ?>">
-                                                    <span></span>
-                                                </label>
-                                                <input type="text" class="text" id="task-text"
-                                                       data-id="<?= $task['id']; ?>"
-                                                       value="<?= $task['title']; ?>" readonly>
+                                            if ($task['priority'] == 3) : ?>
+                                            <label class="circle circle-yellow circle-gray"
+                                                   data-id="<?= $task['id']; ?>">
                                                 <?php
                                                 endif; ?>
+                                                <input type="checkbox" class="checkbox-task" id="<?= $task['id']; ?>"
+                                                       checked>
+                                                <span></span>
+                                            </label>
+                                            <input type="text" class="text text-line-through" id="task-text"
+                                                   data-id="<?= $task['id']; ?>"
+                                                   value="<?= $task['title']; ?>" readonly>
+                                            <?php
+                                            endif;
+                                            if ($task['checkbox'] == 0) :
+                                            if ($task['priority'] == 1) : ?>
+                                            <label class="circle circle-red" data-id="<?= $task['id']; ?>">
+                                                <?php
+                                                endif;
+                                                if ($task['priority'] == 2) : ?>
+                                                <label class="circle circle-blue" data-id="<?= $task['id']; ?>">
+                                                    <?php
+                                                    endif;
+                                                    if ($task['priority'] == 3) : ?>
+                                                    <label class="circle circle-yellow" data-id="<?= $task['id']; ?>">
+                                                        <?php
+                                                        endif; ?>
+                                                        <input type="checkbox" class="checkbox-task "
+                                                               id="<?= $task['id']; ?>">
+                                                        <span></span>
+                                                    </label>
+                                                    <input type="text" class="text" id="task-text"
+                                                           data-id="<?= $task['id']; ?>"
+                                                           value="<?= $task['title']; ?>" readonly>
+                                                    <?php
+                                                    endif; ?>
+                                </div>
+                                <div class="action-button">
+                                    <button class="edit" id="edit" data-id="<?= $task['id']; ?>"
+                                            title="Редактировать задачу">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="delete" id="btn-delete" data-id="<?= $task['id']; ?>"
+                                            title="Удалить задачу">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="action-button">
-                                <button class="edit" id="edit" data-id="<?= $task['id']; ?>"
-                                        title="Редактировать задачу">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="delete" id="btn-delete" data-id="<?= $task['id']; ?>"
-                                        title="Удалить задачу">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                <?php
+                        </li>
+                    <?php
+                    endif;
                 endwhile;
             endif;
             ?>
