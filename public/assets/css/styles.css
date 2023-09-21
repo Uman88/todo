@@ -104,13 +104,30 @@ header {
     display: block;
 }
 
-.user-avatar,.username {
+.avatar, .username {
     display: flex;
     justify-content: center;
 }
 
-.user-avatar img {
-    width: 150px;
+.avatar img {
+    height: 128px;
+    width: 128px;
+    line-height: 0;
+    display: inline-block;
+    border: 4px solid rgba(200, 200, 200, 0.4);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    transition: linear 0.25s;
+    margin: 5px;
+}
+
+.circle img {
+    border-radius: 50%;
+}
+.circle:hover {
+    transition: ease-out 0.2s;
+    border: 4px solid rgba(0,0,0,0.2);
+    -webkit-transition: ease-out 0.2s;
 }
 
 .username span {
@@ -698,6 +715,7 @@ p, a {
     text-align: center;
     font-weight: bold;
 }
+
 /* End Signin and Signup */
 
 /* 404 */
