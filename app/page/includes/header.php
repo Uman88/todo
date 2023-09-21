@@ -20,8 +20,23 @@
         </div>
         <!-- Open user menu -->
         <div class="user-settings">
-            <div class="user-avatar"><img src="<?= IMAGES; ?>/no-avatar.png"></div>
-            <div class="username">Привет&nbsp;<span>Uman!</span></div>
+            <?php
+            $id_user = $_SESSION['user']['id'];
+            $sql = "SELECT * FROM `users` WHERE `id`='$id_user'";
+            $user = $conn->query($sql);
+            $row = $user->fetch_assoc();
+            ?>
+            <div class="avatar">
+                <?php
+                if ($row['images'] == null): ?>
+                    <img src="<?= IMAGES; ?>/no-avatar.png">
+                <?php
+                else: ?>
+                    <img src="<?= IMAGES; ?>/<?= $row['images'] ?>">
+                <?php
+                endif; ?>
+            </div>
+            <div class="username">Привет&nbsp;<span><?= $row['name']; ?>!</span></div>
             <ul class="user-list">
                 <li class="user-list-item">
                     <span class="material-symbols-outlined">settings</span>
