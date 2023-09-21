@@ -1,3 +1,10 @@
+<?php
+require_once '../app/core/init.php';
+
+if (!empty($_SESSION['user'])) {
+    header('Location: index.php?id=2');
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
