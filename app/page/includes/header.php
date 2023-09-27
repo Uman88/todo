@@ -5,13 +5,7 @@
             <span class="material-symbols-outlined" id="burger-menu">menu</span>
         </div>
         <div class="header-home">
-            <a href="./"><span class="material-symbols-outlined">home</span></a>
-        </div>
-        <div class="search">
-            <div class="search-input-icon">
-                <i class="material-symbols-outlined icon">search</i>
-                <input type="text" placeholder="Поиск">
-            </div>
+            <a href="/"><span class="material-symbols-outlined">home</span></a>
         </div>
     </div>
     <div class="header-right">
@@ -32,7 +26,7 @@
                     <img src="<?= IMAGES; ?>/no-avatar.png">
                 <?php
                 else: ?>
-                    <img src="<?= IMAGES; ?>/<?= $row['images'] ?>">
+                    <img src="<?= IMAGES; ?>/<?= $row['images']; ?>">
                 <?php
                 endif; ?>
             </div>

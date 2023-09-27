@@ -98,7 +98,7 @@
 
                                 <div class="content">
                                     <?php
-                                    if ($task['checkbox'] == 1 && $task['priority'] == 1) :
+                                    if ($task['checkbox'] == 1) :
                                     if ($task['priority'] == 1) : ?>
                                     <label class="circle circle-red circle-gray" data-id="<?= $task['id']; ?>">
                                         <?php
