@@ -53,10 +53,6 @@ if (!empty($_SESSION['user'])) {
     </div>
 </div>
 
-<script>
-    setTimeout(function () {
-        document.getElementById('message').style.display = 'none';
-    }, 3000);
-</script>
+<?php include INCLUDES . '/js.php'; ?>
 </body>
 </html>
