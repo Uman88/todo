@@ -5,7 +5,7 @@ session_start();
 require_once 'connection.php';
 
 $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$email = filter_var(strtolower(trim($_POST['email'])), FILTER_VALIDATE_EMAIL);
+$email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
 $password = filter_var(trim($_POST['password']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $password_confirm = filter_var(trim($_POST['password_confirm']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -35,7 +35,6 @@ $user = $result_check_user->fetch_assoc();
 if ($user['email'] === $email) {
     $_SESSION['message'] = 'Такой email уже существует';
     header('Location: /index.php?route=register');
-    exit;
 }
 
 // Checking for the same password and password hashing
@@ -51,5 +50,3 @@ if ($password === $password_confirm) {
     $_SESSION['message'] = 'Пароли не совпадают';
     header('Location: /index.php?route=register');
 }
-
-
