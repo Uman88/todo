@@ -43,7 +43,7 @@ if (isset($_POST['title']) && isset($_POST['category']) && isset($_POST['priorit
 
 // Rename task
 if (isset($_POST['value']) && isset($_POST['id'])) {
-    $title = filter_var(trim($_POST['value'], FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    $title = filter_var(trim($_POST['value']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $id = filter_var(trim($_POST['id']), FILTER_VALIDATE_INT);
 
     $rename = "UPDATE `task` SET title='$title', datetime='$date' WHERE id='$id'";
