@@ -4,7 +4,7 @@ session_start();
 
 require_once 'connection.php';
 
-$email = filter_var(strtolower(trim($_POST['email'])), FILTER_VALIDATE_EMAIL);
+$email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
 $password = filter_var(md5(trim($_POST['password'])), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 $sql = "SELECT * FROM `users` WHERE `email` = '$email' AND `password` = '$password'";
