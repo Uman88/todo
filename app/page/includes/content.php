@@ -85,8 +85,8 @@
                 </div>
 
                 <div class="action-submit">
-                    <input type="submit" id="cancel-task" class="btn cancel-task" value="Отмена" return false>
-                    <input type="submit" id="add-new-task" class="btn addtask" value="Добавить задачу" disabled>
+                    <input type="submit" id="cancel-task" class="btn form-cancel-task" value="Отмена" return false>
+                    <input type="submit" id="add-new-task" class="btn form-add-task" value="Добавить задачу" disabled>
                 </div>
             </div>
         </form>
