@@ -38,7 +38,7 @@
         </div>
 
         <form method="post" id="task-form" class="hidden-task-form">
-            <input type="text" name="name-task" id="task-form-input" placeholder="Какую задачу планируешь на сегодня?">
+            <input type="text" name="name-task" id="task-form-input" placeholder="Какую задачу планируешь?">
             <div class="action">
                 <div class="dropdown">
                     <div class="drop-title-cat">
