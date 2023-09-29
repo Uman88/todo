@@ -3,7 +3,16 @@
     <section class="task-list">
 
         <h1>
-            <span class="simple-info">Сегодня</span>
+            <span class="simple-info"><?php
+                $id_url = filter_var(trim($_GET['id']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                if($id_url == '1'){
+                    echo 'Входящие';
+                }elseif ($id_url == '2'){
+                    echo 'Сегодня';
+                }elseif ($id_url == '3'){
+                    echo 'Предстоящее';
+                }
+                ?></span>
             <small>
                 <?php
                 $date = strtotime(date('Y-m-d'));
@@ -84,7 +93,6 @@
 
         <ul class="sortable-list">
             <?php
-            $id_url = filter_var(trim($_GET['id']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $id_user = $_SESSION['user']['id'];
             $sql2 = "SELECT * FROM `task` WHERE `id_user`='$id_user' ORDER BY sortable";
             $tasks = $conn->query($sql2);
