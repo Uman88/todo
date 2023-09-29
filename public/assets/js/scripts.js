@@ -7,6 +7,10 @@ const userSettings = document.querySelector('.user-settings');
 const addTask = document.querySelector('#add-task');
 const taskForm = document.querySelector('#task-form');
 const btnCancelTask = document.querySelector('#cancel-task');
+
+const formAddTask = document.querySelector('.form-add-task');
+const formCancelTask = document.querySelector('.form-cancel-task');
+
 const btnNewTask = document.querySelector('#add-new-task');
 const taskInputField = document.querySelector('#task-form-input');
 const btnEdit = document.querySelectorAll('#edit');
@@ -63,8 +67,11 @@ if (['/index.php?id=1', '/index.php?id=2', '/index.php?id=3'].includes(need_url)
     taskInputField.addEventListener('keyup', () => {
         if (taskInputField.value.trim() === "") {
             btnNewTask.disabled = true;
+            formAddTask.classList.add('form-add-task');
+            formAddTask.classList.remove('form-add-task-opacity');
         } else {
             btnNewTask.disabled = false;
+            formAddTask.classList.add('form-add-task-opacity');
         }
     });
 
