@@ -3,33 +3,37 @@
 require_once 'connection.php';
 
 // Upload avatar
-if (isset($_POST['download-avatar']) && !empty($_POST['download-avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-    $fileTMPPath = $_FILES['avatar']['tmp_name'];
-    $fileName = $_FILES['avatar']['name'];
-    $fileSize = $_FILES['avatar']['size'];
-    $fileType = $_FILES['avatar']['type'];
-    $fileNameCmps = explode(".", $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
+if (isset($_POST['download-avatar'])) {
+    if ($_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        $fileTMPPath = $_FILES['avatar']['tmp_name'];
+        $fileName = $_FILES['avatar']['name'];
+        $fileSize = $_FILES['avatar']['size'];
+        $fileType = $_FILES['avatar']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
 
-    $newFileName = md5(microtime() . $fileName) . '.' . $fileExtension;
+        $newFileName = md5(microtime() . $fileName) . '.' . $fileExtension;
 
-    $id_user = $_SESSION['user']['id'];
-    $allowedImageExtensions = ['jpg', 'png'];
-    if (in_array($fileExtension, $allowedImageExtensions)) {
-        $des_path = ROOT . IMAGES . '/' . $newFileName;
+        $id_user = $_SESSION['user']['id'];
+        $allowedImageExtensions = ['jpg', 'png'];
+        if (in_array($fileExtension, $allowedImageExtensions)) {
+            $des_path = ROOT . IMAGES . '/' . $newFileName;
 
-        if (move_uploaded_file($fileTMPPath, $des_path)) {
-            $sql2 = "UPDATE `users` SET images='$newFileName' WHERE id='$id_user'";
-            $conn->query($sql2);
+            if (move_uploaded_file($fileTMPPath, $des_path)) {
+                $sql2 = "UPDATE `users` SET images='$newFileName' WHERE id='$id_user'";
+                $conn->query($sql2);
 
-            $_SESSION['message'] = 'Аватар успешно загружен!';
-            header('Location: /index.php?route=profile');
-            exit();
-        } else {
-            $_SESSION['message'] = 'Произошла ошибка, ваш аватар не загружен!';
-            header('Location: /index.php?route=profile');
-            exit();
+                $_SESSION['message'] = 'Аватар успешно загружен!';
+                header('Location: /index.php?route=profile');
+                exit();
+            } else {
+                $_SESSION['message'] = 'Произошла ошибка, ваш аватар не загружен!';
+                header('Location: /index.php?route=profile');
+                exit();
+            }
         }
+    } else {
+        header('Location: /index.php?route=profile');
     }
 }
 
