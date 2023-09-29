@@ -501,23 +501,19 @@ main {
     margin: 13px 0;
 }
 
-.cancel-task {
+.form-cancel-task {
     background: var(--black);
     color: var(--other-light);
     margin-right: 5px;
 }
 
-.cancel-task:hover {
-    color: var(--light);
-}
-
-.add-task {
+.form-add-task {
     background: var(--red);
-    color: var(--light);
+    color: var(--other-light);
     opacity: 0.3;
 }
 
-.add-task:hover {
+.form-add-task-opacity {
     opacity: 1;
 }
 
